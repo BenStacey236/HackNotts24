@@ -1,6 +1,6 @@
 import pygame
 
-from config import *
+from OrientationTest.Assets.config import *
 from AimTrainer.AimTrainer import AimTrainer
 from OrientationTest.OrientationTest import OrientationTest
 from OrientationTest.Model import Model

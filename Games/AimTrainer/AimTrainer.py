@@ -1,8 +1,8 @@
 import pygame
 import random
 
-from config import *
-from AimTrainer.Target import Target
+from Assets.config import *
+from Target import Target
 
 
 class AimTrainer():
