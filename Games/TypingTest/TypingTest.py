@@ -68,13 +68,13 @@ def display_text(text, y_offset, line_height=50, max_width=1400):
 
     lines = wrap_text(text, font, max_width)
     for line in lines:
-        text_surface = font.render(line, True, (0, 0, 0))
+        text_surface = TEXT_FONT.render(line, True, PURPLE)
         screen.blit(text_surface, (50, y_offset))
         y_offset += line_height  # Move down for the next line
 
 def main():
     # Load the target phrase
-    filename = 'Assets/tests.txt'
+    filename = 'Games/TypingTest/Assets/tests.txt'
     target_phrase = get_random_typing_phrase(filename)
     user_input = ""
     game_started = False
@@ -82,14 +82,14 @@ def main():
     # Main loop
     running = True
     while running:
-        screen.fill((255, 255, 255))  # Clear screen with white background
+        screen.fill(ORANGE)  # Clear screen with white background
 
         # Display the target phrase at the top
         display_text("Type the following phrase:", 50)
         display_text(target_phrase, 100)
 
         # Draw a box for the user input area
-        pygame.draw.rect(screen, (230, 230, 250), (50, 400, 1400, 100))  # Light blue box for user input
+        pygame.draw.rect(screen, LIGHT_ORANGE, (50, 400, 1400, 100))  # Light blue box for user input
         display_text("Your input:", 350)  # Label above input box
 
         # Display user input inside the box

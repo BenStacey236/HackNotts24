@@ -3,9 +3,19 @@ import pygame
 import random
 import time
 from math import *
+from cs50 import SQL
 
 from Assets.config import *
 from Model import Model
+import sys
+
+if len(sys.argv) < 2:
+    print("No session_id provided.")
+    sys.exit(1)
+
+session_id = sys.argv[1] 
+
+db = SQL("sqlite:///scores.db")
 
 
 # Initialises the projection matrix
@@ -14,11 +24,12 @@ PROJECTION_MATRIX = np.matrix([[1, 0, 0],
 
 
 class OrientationTest():
-    def __init__(self, surface:pygame.surface, FPS:int, WIDTH=1000, HEIGHT=800) -> None:
+    def __init__(self, surface:pygame.surface,sessionID:str, FPS:int, WIDTH=1000, HEIGHT=800) -> None:
         # Sets the app perameters based on the passed arguments
         self.WIN = surface
         self.FPS = FPS
         self.running = True
+        self.sessionID = sessionID
         
         # Initialses constant values for the UI
         self.__HEIGHT = HEIGHT
@@ -188,6 +199,15 @@ class OrientationTest():
                 exit()
             
             if event.type == pygame.KEYDOWN:
+                score = self.finalScore
+                db.execute("INSERT INTO threedee (score, user_id, username) VALUES (?, ?, (SELECT username FROM users WHERE id = ?))",score, session_id, session_id)
+        
+                highestscore = db.execute("SELECT threedee FROM highscores WHERE user_id = ?", session_id)
+                
+                highestscore = highestscore[0]
+                highestscore = highestscore['aim']
+                if score > highestscore:
+                    db.execute("UPDATE highscores SET threedee = (?) WHERE user_id = ?", score, session_id)
                 # Quits application if escape key is pressed
                 if event.key == pygame.K_ESCAPE:
                     self.running = False

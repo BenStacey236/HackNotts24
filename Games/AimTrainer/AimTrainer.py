@@ -2,16 +2,27 @@ import pygame
 import random
 
 from Assets.config import *
-from Target import Target
+from Assets.Target import Target
+from cs50 import SQL
+import sys
 
+db = SQL("sqlite:///scores.db")
+
+
+if len(sys.argv) < 2:
+    print("No session_id provided.")
+    sys.exit(1)
+
+session_id = sys.argv[1] 
 
 class AimTrainer():
-    def __init__(self, surface:pygame.surface, startTargets:int=20, WIDTH:int=1000, HEIGHT:int=800):
+    def __init__(self, surface:pygame.surface, sessionID:str, startTargets:int=20, WIDTH:int=1000, HEIGHT:int=800):
         # Initialise Default Perimeters for the PyGame Window
         self.WIN = surface
         self.running = True
         self.__WIDTH = WIDTH
         self.__HEIGHT = HEIGHT
+        self.sessionID = sessionID
 
         # Initialise Starting Text
         self.__startingTitle = TITLE_FONT.render('Aim Trainer', True, PURPLE)
@@ -85,13 +96,28 @@ class AimTrainer():
         for event in pygame.event.get():
             # Quits application if 'X' button on the window is pressed
             if event.type == pygame.QUIT:
-                self.running = False
+                db.execute("INSERT INTO aim (score, user_id, username) VALUES (?, ?, (SELECT username FROM users WHERE id = ?))",self.get_average_time()*1000, session_id, session_id)
+        
+                highestscore = db.execute("SELECT aim FROM highscores WHERE user_id = ?", session_id)
+                
+                highestscore = highestscore[0]
+                highestscore = highestscore['aim']
+                if self.get_average_time()*1000 < highestscore or highestscore == 0:
+                    db.execute("UPDATE highscores SET aim = (?) WHERE user_id = ?", self.get_average_time()*1000, session_id)
                 pygame.quit()
                 exit()
             
             if event.type == pygame.KEYDOWN:
                 # Quits application if escape key is pressed
                 if event.key == pygame.K_ESCAPE:
+                    db.execute("INSERT INTO aim (score, user_id, username) VALUES (?, ?, (SELECT username FROM users WHERE id = ?))",self.get_average_time()*1000, session_id, session_id)
+        
+                    highestscore = db.execute("SELECT aim FROM highscores WHERE user_id = ?", session_id)
+                
+                    highestscore = highestscore[0]
+                    highestscore = highestscore['aim']
+                    if self.get_average_time()*1000 < highestscore or highestscore == 0:
+                        db.execute("UPDATE highscores SET aim = (?) WHERE user_id = ?", self.get_average_time()*1000, session_id)
                     self.running = False
                     pygame.quit()
                     exit()
@@ -104,10 +130,16 @@ class AimTrainer():
 
 
 while __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print("No session_id provided.")
+        sys.exit(1)
+
+    sessionID = sys.argv[1] 
+
     pygame.display.set_caption(APP_NAME)
     WIN = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
 
-    currentApp = AimTrainer(WIN, 20, WIN_WIDTH, WIN_HEIGHT)
+    currentApp = AimTrainer(WIN, sessionID, 20,  WIN_WIDTH, WIN_HEIGHT)
 
     while currentApp.running:
         currentApp.app_tick()
