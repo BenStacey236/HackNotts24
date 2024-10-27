@@ -24,12 +24,11 @@ PROJECTION_MATRIX = np.matrix([[1, 0, 0],
 
 
 class OrientationTest():
-    def __init__(self, surface:pygame.surface,sessionID:str, FPS:int, WIDTH=1000, HEIGHT=800) -> None:
+    def __init__(self, surface:pygame.surface, FPS:int, WIDTH=1000, HEIGHT=800) -> None:
         # Sets the app perameters based on the passed arguments
         self.WIN = surface
         self.FPS = FPS
         self.running = True
-        self.sessionID = sessionID
         
         # Initialses constant values for the UI
         self.__HEIGHT = HEIGHT
@@ -194,6 +193,15 @@ class OrientationTest():
         for event in pygame.event.get():
             # Quits application if 'X' button on the window is pressed
             if event.type == pygame.QUIT:
+                score = self.finalScore
+                db.execute("INSERT INTO threedee (score, user_id, username) VALUES (?, ?, (SELECT username FROM users WHERE id = ?))",score, session_id, session_id)
+        
+                highestscore = db.execute("SELECT threedee FROM highscores WHERE user_id = ?", session_id)
+                
+                highestscore = highestscore[0]
+                highestscore = highestscore['threedee']
+                if score > highestscore:
+                    db.execute("UPDATE highscores SET threedee = (?) WHERE user_id = ?", score, session_id)
                 self.running = False
                 pygame.quit()
                 exit()
@@ -205,7 +213,7 @@ class OrientationTest():
                 highestscore = db.execute("SELECT threedee FROM highscores WHERE user_id = ?", session_id)
                 
                 highestscore = highestscore[0]
-                highestscore = highestscore['aim']
+                highestscore = highestscore['threedee']
                 if score > highestscore:
                     db.execute("UPDATE highscores SET threedee = (?) WHERE user_id = ?", score, session_id)
                 # Quits application if escape key is pressed

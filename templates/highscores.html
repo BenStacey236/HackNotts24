@@ -12,14 +12,16 @@ Highscores!
             <th>Typing Highscore</th>
             <th>3D Orientation Highscore</th>
             <th>Aim Highscore</th>
+            <th>Decision Making Highscore</th>
         </tr>
     </thead>
     <tbody>
         <tr>
             <td>{{ ("%.2f" % highscores.memory) if highscores.memory is not none else "N/A" }}</td>
                     <td>{{ ("%.2f" % highscores.typing) if highscores.typing is not none else "N/A" }}</td>
-                    <td>{{ ("%.2f" % highscores.threedee) if highscores.threedee is not none else "N/A" }}</td>
+                    <td>{{ ("%.2f" % highscores.threedee) if highscores.threedee is not none else "N/A" }}%</td>
                     <td>{{ ("%.2f" % highscores.aim) if highscores.aim is not none else "N/A" }}</td>
+                    <td>{{ ("%.2f" % highscores.decision) if highscores.aim is not none else "N/A" }}</td>
         </tr>
         
     <tfoot>

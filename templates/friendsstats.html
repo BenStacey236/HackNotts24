@@ -12,6 +12,7 @@ Highscores!
             <th>Typing Highscore</th>
             <th>3D Orientation Highscore</th>
             <th>Aim Highscore</th>
+            <th>Decision Making Highscore</th>
         </tr>
     </thead>
     <tbody>
@@ -20,6 +21,7 @@ Highscores!
                     <td>{{ ("%.2f" % friendprofile.typing) if friendprofile.typing is not none else "N/A" }}</td>
                     <td>{{ ("%.2f" % friendprofile.threedee) if friendprofile.threedee is not none else "N/A" }}</td>
                     <td>{{ ("%.2f" % friendprofile.aim) if friendprofile.aim is not none else "N/A" }}</td>
+                    <td>{{ ("%.2f" % highscores.decision) if highscores.aim is not none else "N/A" }}</td>
         </tr>
         
     <tfoot>

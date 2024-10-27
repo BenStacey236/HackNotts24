@@ -180,6 +180,21 @@ def aim():
     run_game('AimTrainer/AimTrainer.py', session['user_id'])
     return redirect("/test")
 
+@app.route("/memory", methods = ["POST"])
+@login_required
+def memory():
+    run_game('Sequence.py', session['user_id'])
+    return redirect("/test")
+
+@app.route("/decision", methods = ["POST"])
+@login_required
+def descision():
+    run_game('decision/decision.py', session['user_id'])
+    return redirect("/test")
+
+
+
+
 
 @app.route("/addfriend", methods=["GET","POST"])
 @login_required
