@@ -10,11 +10,11 @@ html {
 
 nav .navbar-brand .black
 {
-    color: black;
+    color: rgb(121, 48, 136);
 }
 nav .navbar-brand .red
 {
-    color: red;
+    color: rgb(255, 134, 0);
 }
 
 
@@ -120,7 +120,7 @@ p {
     padding: 15px 25px; /* Padding for buttons */
     font-size: 18px; /* Font size for button text */
     color: #fff; /* White text color */
-    background-color: #000000; /* Bootstrap primary color for buttons */
+    background-color: rgb(80, 32, 90); /* Bootstrap primary color for buttons */
     border: none; /* Remove default border */
     border-radius: 5px; /* Rounded corners for buttons */
     text-decoration: none; /* Remove underline */
@@ -128,7 +128,7 @@ p {
 }
 
 .game-button:hover {
-    background-color: #b30000; /* Darker shade on hover */
+    background-color: rgb(121, 48, 136); /* Darker shade on hover */
 }
 
 #container { 
