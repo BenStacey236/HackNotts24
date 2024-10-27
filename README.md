@@ -6,7 +6,7 @@ The project is called '**HackerBench**' and is a psychometric assessment of skil
 
 # Contributors
 - Ben Stacey
-- Fin Bourke
+- Finley Bourke
 - Rhys Amoah
 
 # How to use
