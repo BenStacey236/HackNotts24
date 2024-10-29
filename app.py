@@ -185,7 +185,7 @@ def aim():
 @app.route("/memory", methods = ["POST"])
 @login_required
 def memory():
-    run_game('Sequence.py', session['user_id'])
+    run_game('SequenceTest/Sequence.py', session['user_id'])
     return redirect("/test")
 
 @app.route("/decision", methods = ["POST"])
