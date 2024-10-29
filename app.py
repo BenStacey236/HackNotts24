@@ -164,8 +164,10 @@ def leaderboard():
     aim = db.execute("SELECT score, username FROM aim ORDER BY score ASC")
     threedee = db.execute("SELECT score, username FROM threedee ORDER BY score DESC")
     type = db.execute("SELECT score, username FROM type ORDER BY score DESC")
+    decision = db.execute("SELECT score, username FROM decision ORDER BY score DESC")
 
-    return render_template("leaderboard.html",memory=memory, aim=aim, threedee=threedee, type=type)
+
+    return render_template("leaderboard.html",memory=memory, aim=aim, threedee=threedee, type=type, decision=decision)
 
 
 @app.route("/threedee", methods = ["POST"])
